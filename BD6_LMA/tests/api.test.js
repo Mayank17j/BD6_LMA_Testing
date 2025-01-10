@@ -1,4 +1,7 @@
+//import supertest for mock testing
 const request = require('supertest');
+
+//import all function from controllers
 const {
   getAllPackages,
   getPackagesByDest,
@@ -6,9 +9,14 @@ const {
   updatePackageBySlot,
   getBookingByPackageId,
 } = require('../controllers');
+
+//import app from index
 const { app } = require('../index.js');
+
+//get http for connection with server
 const http = require('http');
 
+//mocking the function defined in controllers
 jest.mock('../controllers', () => ({
   ...jest.requireActual('../controllers'),
   getAllPackages: jest.fn(),
@@ -18,6 +26,7 @@ jest.mock('../controllers', () => ({
   getBookingByPackageId: jest.fn(),
 }));
 
+//sync server
 let server;
 beforeAll(async () => {
   server = http.createServer(app);
@@ -27,6 +36,7 @@ afterAll(async () => {
   server.close();
 });
 
+//declaring mock tests
 describe('API Endpoint tests', () => {
   it('Test 1: Retrieve All Packages', async () => {
     const mockValue = [
@@ -45,7 +55,9 @@ describe('API Endpoint tests', () => {
         availableSlots: 15,
       },
     ];
+    //creating mock function
     getAllPackages.mockResolvedValue(mockValue);
+    //getting the result of mock API
     const result = await request(server).get('/packages').send(mockValue);
     expect(result.statusCode).toBe(200);
     expect(result.body.packages).toEqual(mockValue);

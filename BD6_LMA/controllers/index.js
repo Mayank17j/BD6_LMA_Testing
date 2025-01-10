@@ -144,26 +144,26 @@ let bookings = [
   },
 ];
 
-//fun1
+//fun to get all packages from travelPackages data
 const getAllPackages = async () => {
   return travelPackages;
 };
 
-//fun2
+//fun to get packages by destination
 const getPackagesByDest = async (destination) => {
   return travelPackages.find(
     (packg) => packg.destination.toLowerCase() === destination.toLowerCase()
   );
 };
 
-//fun3
+//fun to add new booking in bookings data
 const addNewBooking = async (newBookingData) => {
   newBookingData = { bookingId: bookings.length++, ...newBookingData };
   bookings.push(newBookingData);
   return newBookingData;
 };
 
-//fun4
+//fun to update package seatsBooked by packageId
 const updatePackageBySlot = async (updatedPackage) => {
   //find package by packageId
   const packageToUpdate = travelPackages.find(
@@ -174,13 +174,14 @@ const updatePackageBySlot = async (updatedPackage) => {
   return packageToUpdate;
 };
 
-//fun5
+//fun to get booking data by packageId
 const getBookingByPackageId = async (packageId) => {
   let result = [];
   result = bookings.find((bookg) => bookg.packageId === packageId);
   return result;
 };
 
+//exporing all function to used by other module
 module.exports = {
   getAllPackages,
   getPackagesByDest,

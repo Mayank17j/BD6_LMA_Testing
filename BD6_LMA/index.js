@@ -88,4 +88,5 @@ app.get('/bookings/:packageId', async (req, res) => {
   }
 });
 
+//exporing app to used by other module
 module.exports = { app };
