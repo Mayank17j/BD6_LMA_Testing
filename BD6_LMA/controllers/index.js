@@ -151,7 +151,7 @@ const getAllPackages = async () => {
 
 //fun to get packages by destination
 const getPackagesByDest = async (destination) => {
-  return travelPackages.find(
+  return travelPackages.filter(
     (packg) => packg.destination.toLowerCase() === destination.toLowerCase()
   );
 };

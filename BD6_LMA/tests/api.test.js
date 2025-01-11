@@ -58,7 +58,7 @@ describe('API Endpoint tests', () => {
     //creating mock function
     getAllPackages.mockResolvedValue(mockValue);
     //getting the result of mock API
-    const result = await request(server).get('/packages').send(mockValue);
+    const result = await request(server).get('/packages');
     expect(result.statusCode).toBe(200);
     expect(result.body.packages).toEqual(mockValue);
   });
@@ -82,6 +82,7 @@ describe('API Endpoint tests', () => {
   it('Test 3: Add a New Booking', async () => {
     const mockValue = [
       {
+        bookingId: 6,
         packageId: 4,
         customerName: 'Raj Kulkarni',
         bookingDate: '2024-12-20',
@@ -89,7 +90,12 @@ describe('API Endpoint tests', () => {
       },
     ];
     addNewBooking.mockResolvedValue(mockValue);
-    const result = await request(server).post('/bookings').send(mockValue);
+    const result = await request(server).post('/bookings').send({
+      packageId: 4,
+      customerName: 'Raj Kulkarni',
+      bookingDate: '2024-12-20',
+      seats: 2,
+    });
     expect(result.statusCode).toBe(201);
     expect(result.body.booking).toEqual(mockValue);
   });
@@ -97,12 +103,18 @@ describe('API Endpoint tests', () => {
   it('Test 4: Update Available Slots', async () => {
     const mockValue = {
       packageId: 1,
-      seatsBooked: 2,
+      destination: 'Paris',
+      price: 1500,
+      duration: 7,
+      availableSlots: 8,
     };
     updatePackageBySlot.mockResolvedValue(mockValue);
     const result = await request(server)
       .post('/packages/update-seats')
-      .send(mockValue);
+      .send({
+        packageId: 1,
+        seatsBooked: 2,
+      });
     expect(result.statusCode).toBe(200);
     expect(result.body.package).toEqual(mockValue);
   });
@@ -118,7 +130,7 @@ describe('API Endpoint tests', () => {
       },
     ];
     getBookingByPackageId.mockResolvedValue(mockValue);
-    const result = await request(server).get('/bookings/1').send(mockValue);
+    const result = await request(server).get('/bookings/1');
     expect(result.statusCode).toBe(200);
     expect(result.body.bookings).toEqual(mockValue);
   });
