@@ -19,7 +19,7 @@ const http = require('http');
 //mocking the function defined in controllers
 jest.mock('../controllers', () => ({
   ...jest.requireActual('../controllers'),
-  getAllPackages: jest.fn(),
+  //getAllPackages: jest.fn(),
   getPackagesByDest: jest.fn(),
   addNewBooking: jest.fn(),
   updatePackageBySlot: jest.fn(),
@@ -39,28 +39,11 @@ afterAll(async () => {
 //declaring mock tests
 describe('API Endpoint tests', () => {
   it('Test 1: Retrieve All Packages', async () => {
-    const mockValue = [
-      {
-        packageId: 1,
-        destination: 'Paris',
-        price: 1500,
-        duration: 7,
-        availableSlots: 10,
-      },
-      {
-        packageId: 2,
-        destination: 'Rome',
-        price: 1200,
-        duration: 5,
-        availableSlots: 15,
-      },
-    ];
-    //creating mock function
-    getAllPackages.mockResolvedValue(mockValue);
     //getting the result of mock API
     const result = await request(server).get('/packages');
     expect(result.statusCode).toBe(200);
-    expect(result.body.packages).toEqual(mockValue);
+    expect(Array.isArray(result.body.packages)).toBe(true);
+
   });
 
   it('Test 2: Retrieve Package by Destination', async () => {

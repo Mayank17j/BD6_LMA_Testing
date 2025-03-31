@@ -144,26 +144,26 @@ let bookings = [
   },
 ];
 
-//fun to get all packages from travelPackages data
+//function to get all packages from travelPackages data
 const getAllPackages = async () => {
   return travelPackages;
 };
 
-//fun to get packages by destination
-const getPackagesByDest = async (destination) => {
+//function to get packages by destination
+const getPackagesByDestination = async (destination) => {
   return travelPackages.filter(
     (packg) => packg.destination.toLowerCase() === destination.toLowerCase()
   );
 };
 
-//fun to add new booking in bookings data
+//function to add new booking in bookings data
 const addNewBooking = async (newBookingData) => {
   newBookingData = { bookingId: bookings.length++, ...newBookingData };
   bookings.push(newBookingData);
   return newBookingData;
 };
 
-//fun to update package seatsBooked by packageId
+//function to update package seatsBooked by packageId
 const updatePackageBySlot = async (updatedPackage) => {
   //find package by packageId
   const packageToUpdate = travelPackages.find(
@@ -174,7 +174,7 @@ const updatePackageBySlot = async (updatedPackage) => {
   return packageToUpdate;
 };
 
-//fun to get booking data by packageId
+//function to get booking data by packageId
 const getBookingByPackageId = async (packageId) => {
   let result = [];
   result = bookings.find((bookg) => bookg.packageId === packageId);
@@ -184,7 +184,7 @@ const getBookingByPackageId = async (packageId) => {
 //exporing all function to used by other module
 module.exports = {
   getAllPackages,
-  getPackagesByDest,
+  getPackagesByDestination,
   addNewBooking,
   updatePackageBySlot,
   getBookingByPackageId,

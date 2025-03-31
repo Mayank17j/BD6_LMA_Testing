@@ -1,16 +1,13 @@
 const express = require('express');
-const { resolve } = require('path');
 const app = express();
-const port = 3000;
 app.use(express.static('static'));
 app.use(express.json());
 
-//https://tanaypratap.notion.site/BD6_Mock_Assessment-79de71ff827e40ca9053570574a645f4?pvs=73
-
+//https://writerank.notion.site/BD_6-Assignment-15fc77a2c9f380228975f39edac0f8ec
 
 const {
   getAllPackages,
-  getPackagesByDest,
+  getPackagesByDestination,
   addNewBooking,
   updatePackageBySlot,
   getBookingByPackageId,
@@ -20,8 +17,8 @@ const {
 app.get('/packages', async (req, res) => {
   try {
     const packages = await getAllPackages();
-    if (packages.length === 0)
-      return res.status(404).send('Package not found!');
+    if (!packages || packages.length === 0)
+      return res.status(404).send('Package not found, empty packages!');
     res.status(200).json({ packages: packages });
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -31,15 +28,15 @@ app.get('/packages', async (req, res) => {
 //Exercise 2: Retrieve Travel Package by Destination (GET) /packages/Paris
 app.get('/packages/:destination', async (req, res) => {
   try {
-    const packages = await getPackagesByDest(req.params.destination);
-    if (!packages) return res.status(404).send('Package not found by id!');
+    const packages = await getPackagesByDestination(req.params.destination);
+    if (!packages) return res.status(404).send('Package not found by destination!');
     res.status(200).json({ package: packages });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
 
-//Exercise 3: Add a New Booking  (POST) /bookings
+//Exercise 3: Add a New Booking (POST) /bookings
 /*
 {
   "packageId": 4,
@@ -68,7 +65,7 @@ app.post('/bookings', async (req, res) => {
 app.post('/packages/update-seats', async (req, res) => {
   try {
     const updatedPackage = await updatePackageBySlot(req.body);
-    console.log('LOG:updatedPackage: ', updatedPackage);
+    //console.log('LOG:updatedPackage: ', updatedPackage);
 
     if (!updatedPackage)
       return res.status(404).send('Unable to update package!');

@@ -1,6 +1,6 @@
 let { app } = require('./index.js');
-const port = 3000;
+const PORT = 3000;
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`App listening at http://localhost:${PORT}`);
 });
